@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { apiKeyMiddleware } from "./utils/middleware";
+import skgRoutes from "./routes/skg.routes";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(apiKeyMiddleware);
+app.use("/api/skg", skgRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
