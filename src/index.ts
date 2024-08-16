@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import { apiKeyMiddleware, verifyToken } from "./utils/middleware";
+import { apiKeyMiddleware } from "./utils/middleware";
 
 const app = express();
 
