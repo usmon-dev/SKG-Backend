@@ -1,0 +1,38 @@
+{
+  "name": "secret-key-generator-backend",
+  "version": "1.0.0",
+  "description": "This is Backend side of Secret Key Generator",
+  "main": "index.ts",
+  "scripts": {
+    "start": "node src/index.ts",
+    "dev": "nodemon index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usmon-dev/Secret-Key-Generator.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "ExpressJS",
+    "Typescript",
+    "Firebase"
+  ],
+  "author": "Usmon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/usmon-dev/Secret-Key-Generator/issues"
+  },
+  "homepage": "https://github.com/usmon-dev/Secret-Key-Generator#readme",
+  "dependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^22.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "firebase": "^10.12.5",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2"
+  }
+}
