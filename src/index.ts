@@ -12,7 +12,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
+app.get("/", apiKeyMiddleware, (req, res) => {
   res.json({ message: "Welcome to the API!" });
 });
 
