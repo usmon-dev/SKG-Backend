@@ -45,7 +45,7 @@ export const apiKeyMiddleware = (
 ) => {
   const apiKey = req.header("X-API-Key");
 
-  if (!apiKey || apiKey !== process.env.API_KEY) {
+  if (!apiKey || apiKey !== process.env.API_SECRET_KEY) {
     return res.status(401).send("Forbidden");
   }
 
