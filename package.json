@@ -2,7 +2,7 @@
   "name": "secret-key-generator-backend",
   "version": "1.0.0",
   "description": "This is Backend side of Secret Key Generator",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "start": "node src/index.ts",
     "dev": "nodemon index.ts"
