@@ -148,7 +148,7 @@ export const updateUser = [
 
 // Delete user
 export const deleteUser = [
-  verifyToken,
+  verifyAdminToken,
   async (req: Request, res: Response) => {
     try {
       await deleteDoc(doc(usersCollection, req.params.id));
