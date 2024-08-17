@@ -4,7 +4,7 @@ import "dotenv/config";
 
 interface DecodedUser {
   id: string;
-  isAdmin: boolean;
+  isAdmin?: boolean;
 }
 
 const secretKey: string = process.env.JWT_SECRET || "";
@@ -28,10 +28,10 @@ export const verifyToken = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.header("Authorization")?.split(" ")[1];
+  const token = req.header("Authorization");
 
   if (!token) {
-    return res.status(401).json({ error: "No token provided" });
+    return res.status(401).json({ error: "No token provided user" });
   }
 
   try {
@@ -48,10 +48,10 @@ export const verifyAdminToken = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.header("Authorization")?.split(" ")[1];
+  const token = req.header("Authorization");
 
   if (!token) {
-    return res.status(401).json({ error: "No token provided" });
+    return res.status(401).json({ error: "No token provided admin" });
   }
 
   try {

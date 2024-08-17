@@ -14,6 +14,7 @@ import {
 import { verifyToken, verifyAdminToken } from "../utils/middleware";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import "dotenv/config";
 
 const usersCollection = collection(db, "users");
 
