@@ -1,3 +1,32 @@
+/**
+ * Middleware function to verify the API key in the request headers.
+ * If the API key is missing or invalid, it returns a 401 Unauthorized response.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @param {NextFunction} next - The next middleware function in the stack.
+ */
+
+/**
+ * Middleware function to verify the JWT token in the request headers.
+ * If the token is missing or invalid, it returns a 401 Unauthorized response.
+ * If the token is valid, it sets the `userId` property on the request object.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @param {NextFunction} next - The next middleware function in the stack.
+ */
+
+/**
+ * Middleware function to verify the JWT token in the request headers and check if the user is an admin.
+ * If the token is missing or invalid, it returns a 401 Unauthorized response.
+ * If the token is valid but the user is not an admin, it returns a 403 Forbidden response.
+ * If the token is valid and the user is an admin, it sets the `userId` property on the request object.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @param {NextFunction} next - The next middleware function in the stack.
+ */
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import "dotenv/config";

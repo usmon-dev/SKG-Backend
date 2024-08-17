@@ -1,3 +1,20 @@
+/**
+ * Handles user registration, login, and CRUD operations for users.
+ *
+ * The `usersController` module provides the following functionality:
+ *
+ * - `registerUser`: Registers a new user by creating a new document in the "users" collection in Firestore. It checks if the user already exists, hashes the password, and returns a JWT token.
+ * - `loginUser`: Authenticates a user by checking the username and password, and returns a JWT token if the credentials are valid.
+ * - `getUsers`: Retrieves a list of all users. This endpoint is restricted to admin users only.
+ * - `getUserById`: Retrieves a user by their ID. This endpoint is restricted to admin users only.
+ * - `updateUser`: Updates a user's information. This endpoint is restricted to admin users only.
+ * - `deleteUser`: Deletes a user. This endpoint is restricted to admin users only.
+ * - `getMyself`: Retrieves the currently authenticated user's information.
+ * - `updateMyself`: Updates the currently authenticated user's information.
+ * - `deleteMyself`: Deletes the currently authenticated user.
+ *
+ * The module uses Firebase Firestore for data storage and JWT for authentication.
+ */
 import { Request, Response } from "express";
 import { db } from "../config";
 import {

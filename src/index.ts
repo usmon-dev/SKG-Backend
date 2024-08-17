@@ -1,3 +1,19 @@
+/**
+ * This is the main entry point for the server application. It sets up the Express.js server, configures middleware, and defines the routes for the API.
+ *
+ * The server listens on the port specified by the `PORT` environment variable, or defaults to port 3000 if the environment variable is not set.
+ *
+ * The server uses the following middleware:
+ * - `cors`: Enables CORS (Cross-Origin Resource Sharing) to allow requests from other domains.
+ * - `express.json`: Parses incoming JSON data in the request body.
+ * - `express.urlencoded`: Parses incoming URL-encoded data in the request body.
+ * - `apiKeyMiddleware`: Middleware that checks for a valid API key in the request headers.
+ *
+ * The server defines the following routes:
+ * - `GET /`: Responds with a welcome message if the API key is valid.
+ * - `/api/skg`: Routes defined in the `skgRoutes` module.
+ * - `/api/users`: Routes defined in the `usersRoutes` module.
+ */
 import "dotenv/config";
 import express from "express";
 import cors from "cors";

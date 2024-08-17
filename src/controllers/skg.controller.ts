@@ -1,3 +1,83 @@
+/**
+ * Generates a random secret key.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @returns {Promise<void>} - A JSON response with the generated secret key.
+ */
+// export const SecretKeyGenerator = async (req: Request, res: Response) => {
+  // ...
+// };
+
+/**
+ * Creates a new secret key.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @returns {Promise<void>} - A JSON response with the created secret key.
+ */
+// export const createSecretKey = [
+//   verifyToken,
+//   async (req: Request, res: Response) => {
+//     // ...
+//   },
+// ];
+
+/**
+ * Retrieves the list of secret keys for the authenticated user.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @returns {Promise<void>} - A JSON response with the list of secret keys.
+ */
+// export const getSecretKeys = [
+//   verifyToken,
+//   async (req: Request, res: Response) => {
+//     // ...
+//   },
+// ];
+
+/**
+ * Retrieves a specific secret key.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @returns {Promise<void>} - A JSON response with the requested secret key.
+ */
+// export const getSecretKey = [
+//   verifyToken,
+//   async (req: Request, res: Response) => {
+//     // ...
+//   },
+// ];
+
+/**
+ * Updates a specific secret key.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @returns {Promise<void>} - A JSON response with the updated secret key.
+ */
+// export const updateSecretKey = [
+//   verifyToken,
+//   async (req: Request, res: Response) => {
+//     // ...
+//   },
+// ];
+
+/**
+ * Deletes a specific secret key.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @returns {Promise<void>} - A JSON response indicating the successful deletion.
+ */
+// export const deleteSecretKey = [
+//   verifyToken,
+//   async (req: Request, res: Response) => {
+//     // ...
+//   },
+// ];
 import { Request, Response } from "express";
 import crypto from "crypto";
 import { db } from "../config";
