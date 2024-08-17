@@ -14,12 +14,12 @@
  * - `/api/skg`: Routes defined in the `skgRoutes` module.
  * - `/api/users`: Routes defined in the `usersRoutes` module.
  */
-import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { apiKeyMiddleware } from "./utils/middleware";
 import skgRoutes from "./routes/skg.routes";
 import usersRoutes from "./routes/users.routes";
+import "dotenv/config";
 
 const app = express();
 
