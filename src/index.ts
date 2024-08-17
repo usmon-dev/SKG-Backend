@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { apiKeyMiddleware } from "./utils/middleware";
 import skgRoutes from "./routes/skg.routes";
+import usersRoutes from "./routes/users.routes";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.get("/", apiKeyMiddleware, (req, res) => {
 
 app.use(apiKeyMiddleware);
 app.use("/api/skg", skgRoutes);
+app.use("/api/users", usersRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
