@@ -45,11 +45,11 @@ export const apiKeyMiddleware = (
 ) => {
   const apiKey = req.header("X-API-Key");
 
-  if (apiKey && apiKey == process.env.API_SECRET_KEY) {
-    next();
-  } else {
-    res.status(401).json({ error: "Unauthorized" });
+  if (!apiKey || apiKey !== process.env.API_SECRET_KEY) {
+    return res.status(401).send("Forbidden");
   }
+
+  next();
 };
 
 export const verifyToken = (
