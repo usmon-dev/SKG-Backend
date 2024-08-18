@@ -43,13 +43,13 @@ export const apiKeyMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  const apiKey = req.header("apiKey");
+  const apiKey = req.header("X-API-Key");
 
-  if (!apiKey || apiKey !== process.env.API_SECRET_KEY) {
-    return res.status(401).send("Forbidden");
+  if (apiKey && apiKey == process.env.API_SECRET_KEY) {
+    next();
+  } else {
+    res.status(401).json({ error: "Unauthorized" });
   }
-
-  next();
 };
 
 export const verifyToken = (
