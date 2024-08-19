@@ -39,7 +39,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "";
 
 interface User {
   name: string;
-  surname?: string;
+  surname: string;
   username: string;
   password: string;
   isAdmin: boolean;
@@ -65,7 +65,7 @@ export const registerUser = async (req: Request, res: Response) => {
     // Create new user
     const newUser = await addDoc(usersCollection, {
       name,
-      surname,
+      surname: surname || "",
       username,
       password: hashedPassword,
       isAdmin: isAdmin || false,
