@@ -45,10 +45,37 @@ interface User {
   isAdmin: boolean;
 }
 
+interface UserInput {
+  name: string;
+  surname?: string;
+  username: string;
+  password: string;
+  isAdmin?: boolean;
+}
+
+interface UserUpdate {
+  name?: string;
+  surname?: string;
+  username?: string;
+  password?: string;
+  isAdmin?: boolean;
+}
+
+interface LoginInput {
+  username: string;
+  password: string;
+}
+
+interface JwtPayload {
+  id: string;
+  isAdmin: boolean;
+}
+
 // Register user
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const { name, surname, username, password, isAdmin } = req.body as User;
+    const { name, surname, username, password, isAdmin } =
+      req.body as UserInput;
 
     // Check if user already exists
     const userQuery = query(usersCollection, where("username", "==", username));
@@ -71,7 +98,10 @@ export const registerUser = async (req: Request, res: Response) => {
       isAdmin: isAdmin || false,
     });
 
-    const token = jwt.sign({ id: newUser.id, isAdmin }, JWT_SECRET);
+    const token = jwt.sign(
+      { id: newUser.id, isAdmin: isAdmin || false } as JwtPayload,
+      JWT_SECRET
+    );
 
     res.status(201).json({ message: "User registered successfully", token });
   } catch (error) {
@@ -82,7 +112,7 @@ export const registerUser = async (req: Request, res: Response) => {
 // Login user
 export const loginUser = async (req: Request, res: Response) => {
   try {
-    const { username, password } = req.body;
+    const { username, password } = req.body as LoginInput;
 
     const userQuery = query(usersCollection, where("username", "==", username));
     const userDocs = await getDocs(userQuery);
@@ -99,7 +129,7 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 
     const token = jwt.sign(
-      { id: userDocs.docs[0].id, isAdmin: user.isAdmin },
+      { id: userDocs.docs[0].id, isAdmin: user.isAdmin } as JwtPayload,
       JWT_SECRET
     );
 
@@ -145,10 +175,15 @@ export const updateUser = [
   async (req: Request, res: Response) => {
     try {
       const { name, surname, username, isAdmin, password } =
-        req.body as Partial<User>;
+        req.body as UserUpdate;
       const userDoc = doc(usersCollection, req.params.id);
 
-      const updateData: Partial<User> = { name, surname, username, isAdmin };
+      const updateData: Partial<UserUpdate> = {
+        name,
+        surname,
+        username,
+        isAdmin,
+      };
 
       if (password) {
         const salt = await bcrypt.genSalt(10);
@@ -198,10 +233,10 @@ export const updateMyself = [
   verifyToken,
   async (req: Request, res: Response) => {
     try {
-      const { name, surname, username, password } = req.body as Partial<User>;
+      const { name, surname, username, password } = req.body as UserUpdate;
       const userDoc = doc(usersCollection, (req as any).userId);
 
-      const updateData: Partial<User> = { name, surname, username };
+      const updateData: Partial<UserUpdate> = { name, surname, username };
 
       if (password) {
         const salt = await bcrypt.genSalt(10);
