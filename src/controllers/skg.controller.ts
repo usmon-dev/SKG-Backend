@@ -11,7 +11,6 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { verifyToken } from "../utils/middleware";
-import { dateAndTime } from "../utils/defaults";
 
 interface SecretKey {
   id: string;
@@ -43,7 +42,7 @@ export const createSecretKey = [
       const { title } = req.body;
       const secretKey = crypto.randomBytes(32).toString("hex");
       const userId = req.userId;
-      const createdAt = dateAndTime;
+      const createdAt = new Date().toISOString();
       const newSecretKey = await addDoc(secretKeysCollection, {
         title,
         secretKey,
