@@ -1,24 +1,14 @@
-// const now = new Date();
-// const hours = String(now.getHours()).padStart(2, "0");
-// const minutes = String(now.getMinutes()).padStart(2, "0");
-// const day = String(now.getDate()).padStart(2, "0");
-// const month = String(now.getMonth() + 1).padStart(2, "0");
-// const year = now.getFullYear();
+import { DateTime } from 'luxon';
 
-// export const time = `${hours}:${minutes}`;
-// export const date = `${day}.${month}.${year}`;
+// Specify your desired time zone
+const timezone = 'UTC+5'; // Replace with your desired time zone
 
-// export const dateAndTime = `${date} ${time}`;
+// Get the current time in the specified time zone
+const now = DateTime.now().setZone(timezone);
 
-const now = new Date();
-const formattedDate = now.toLocaleString('ru-RU', {
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-});
-const [datePart, timePart] = formattedDate.split(' ');
-const finalFormat = `${datePart.replace(',', '')} ${timePart}`;
+// Format the time and date
+const formattedDate = now.toFormat('dd.MM.yyyy HH:mm'); // Use 'dd' for day and 'yyyy' for year
 
-export const dateAndTime = finalFormat;
+console.log(formattedDate); // Output: 01.10.2024 18:37
+
+export const dateAndTime = formattedDate;
