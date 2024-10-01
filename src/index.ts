@@ -20,7 +20,7 @@ import { apiKeyMiddleware } from "./utils/middleware";
 import skgRoutes from "./routes/skg.routes";
 import usersRoutes from "./routes/users.routes";
 import "dotenv/config";
-import { dateAndTime } from "./utils/defaults";
+import { getFormattedDateAndTime } from "./utils/defaults";
 
 const app = express();
 
@@ -38,8 +38,7 @@ app.use(apiKeyMiddleware);
 app.use("/api/skg", skgRoutes);
 app.use("/api/users", usersRoutes);
 
-console.log(dateAndTime);
-
+console.log(getFormattedDateAndTime());
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
