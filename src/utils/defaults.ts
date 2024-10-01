@@ -1,11 +1,14 @@
-const now = new Date();
-const hours = String(now.getHours()).padStart(2, "0");
-const minutes = String(now.getMinutes()).padStart(2, "0");
-const day = String(now.getDate()).padStart(2, "0");
-const month = String(now.getMonth() + 1).padStart(2, "0");
-const year = now.getFullYear();
+import { DateTime } from "luxon";
 
-export const time = `${hours}:${minutes}`;
-export const date = `${day}.${month}.${year}`;
+// Specify your desired time zone
+const timezone = "GMT+5"; // Replace with your desired time zone
 
-export const dateAndTime = `${date} ${time}`;
+// Get the current time in the specified time zone
+const now = DateTime.now().setZone(timezone);
+
+// Format the time and date
+const time = now.toFormat("HH:mm:ss");
+const date = now.toFormat("DD.MM.YYYY");
+const dateAndTime = `${date} ${time}`;
+
+export { time, date, dateAndTime };
