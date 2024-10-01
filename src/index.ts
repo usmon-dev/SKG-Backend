@@ -20,6 +20,7 @@ import { apiKeyMiddleware } from "./utils/middleware";
 import skgRoutes from "./routes/skg.routes";
 import usersRoutes from "./routes/users.routes";
 import "dotenv/config";
+import { dateAndTime } from "./utils/defaults";
 
 const app = express();
 

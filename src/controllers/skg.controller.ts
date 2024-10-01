@@ -37,11 +37,11 @@ export const SecretKeyGenerator = async (req: Request, res: Response) => {
 
 export const createSecretKey = [
   verifyToken,
-  async (req: RequestWithUserId, res: Response) => {
+  async (req: Request, res: Response) => {
     try {
       const { title } = req.body;
       const secretKey = crypto.randomBytes(32).toString("hex");
-      const userId = req.userId;
+      const userId = (req as RequestWithUserId).userId;
       const createdAt = new Date().toISOString();
       const newSecretKey = await addDoc(secretKeysCollection, {
         title,
@@ -65,9 +65,9 @@ export const createSecretKey = [
 
 export const getSecretKeys = [
   verifyToken,
-  async (req: RequestWithUserId, res: Response) => {
+  async (req: Request, res: Response) => {
     try {
-      const userId = req.userId;
+      const userId = (req as RequestWithUserId).userId;
       const secretKeys = await getDocs(secretKeysCollection);
       const secretKeyList: SecretKey[] = secretKeys.docs
         .filter((doc) => doc.data().userId === userId)
@@ -84,10 +84,10 @@ export const getSecretKeys = [
 
 export const getSecretKey = [
   verifyToken,
-  async (req: RequestWithUserId, res: Response) => {
+  async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const userId = req.userId;
+      const userId = (req as RequestWithUserId).userId;
       const secretKeyDoc = await getDoc(doc(secretKeysCollection, id));
       if (!secretKeyDoc.exists()) {
         return res.status(404).json({ error: "Secret key not found" });
@@ -106,11 +106,11 @@ export const getSecretKey = [
 
 export const updateSecretKey = [
   verifyToken,
-  async (req: RequestWithUserId, res: Response) => {
+  async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
       const { title } = req.body;
-      const userId = req.userId;
+      const userId = (req as RequestWithUserId).userId;
       const secretKeyRef = doc(secretKeysCollection, id);
       const secretKeyDoc = await getDoc(secretKeyRef);
       if (!secretKeyDoc.exists()) {
@@ -135,10 +135,10 @@ export const updateSecretKey = [
 
 export const deleteSecretKey = [
   verifyToken,
-  async (req: RequestWithUserId, res: Response) => {
+  async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const userId = req.userId;
+      const userId = (req as RequestWithUserId).userId;
       const secretKeyRef = doc(secretKeysCollection, id);
       const secretKeyDoc = await getDoc(secretKeyRef);
       if (!secretKeyDoc.exists()) {
