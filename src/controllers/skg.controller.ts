@@ -9,6 +9,8 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { verifyToken } from "../utils/middleware";
 import { getFormattedDateAndTime } from "../utils/defaults";
@@ -69,7 +71,11 @@ export const getSecretKeys = [
   async (req: Request, res: Response) => {
     try {
       const userId = (req as RequestWithUserId).userId;
-      const secretKeys = await getDocs(secretKeysCollection);
+      const secretKeysQuery = query(
+        secretKeysCollection,
+        orderBy("createdAt", "desc")
+      );
+      const secretKeys = await getDocs(secretKeysQuery);
       const secretKeyList: SecretKey[] = secretKeys.docs
         .filter((doc) => doc.data().userId === userId)
         .map((doc) => ({

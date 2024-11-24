@@ -27,11 +27,13 @@ import {
   deleteDoc,
   query,
   where,
+  orderBy,
 } from "firebase/firestore";
 import { verifyToken, verifyAdminToken } from "../utils/middleware";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import "dotenv/config";
+import { getFormattedDateAndTime } from "../utils/defaults";
 
 const usersCollection = collection(db, "users");
 
@@ -43,6 +45,7 @@ interface User {
   username: string;
   password: string;
   isAdmin: boolean;
+  createdAt: string;
 }
 
 interface UserInput {
@@ -51,6 +54,7 @@ interface UserInput {
   username: string;
   password: string;
   isAdmin?: boolean;
+  createdAt?: string;
 }
 
 interface UserUpdate {
@@ -59,6 +63,7 @@ interface UserUpdate {
   username?: string;
   password?: string;
   isAdmin?: boolean;
+  createdAt?: string;
 }
 
 interface LoginInput {
@@ -96,6 +101,7 @@ export const registerUser = async (req: Request, res: Response) => {
       username,
       password: hashedPassword,
       isAdmin: isAdmin || false,
+      createdAt: getFormattedDateAndTime(),
     });
 
     const token = jwt.sign(
@@ -144,7 +150,8 @@ export const getUsers = [
   verifyAdminToken,
   async (req: Request, res: Response) => {
     try {
-      const users = await getDocs(usersCollection);
+      const usersQuery = query(usersCollection, orderBy("createdAt", "desc"));
+      const users = await getDocs(usersQuery);
       const userList = users.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       res.json(userList);
     } catch (error) {
