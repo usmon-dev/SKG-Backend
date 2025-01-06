@@ -163,8 +163,15 @@ export const getUsers = [
     try {
       const usersQuery = query(usersCollection, orderBy("createdAt", "desc"));
       const users = await getDocs(usersQuery);
-      const userList = users.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      res.json(userList);
+      if (users.empty) {
+        return res.status(404).json({ message: "No users found" });
+      } else {
+        const userList = users.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        res.json(userList);
+      }
     } catch (error) {
       res.status(500).json({ message: "Error fetching users", error });
     }
@@ -314,6 +321,29 @@ export const addSkToFav = [
       res
         .status(500)
         .json({ message: "Error adding secret key to favourites", error });
+    }
+  },
+];
+
+export const deleteSkFromFav = [
+  verifyToken,
+  async (req: Request, res: Response) => {
+    try {
+      const skId = req.params.skId;
+      const userDoc = doc(usersCollection, (req as any).userId);
+      const userData = (await getDoc(userDoc)).data() as User;
+      if (userData.favSK.find((fav) => fav.skId === skId)) {
+        await updateDoc(userDoc, {
+          favSK: userData.favSK.filter((fav) => fav.skId !== skId),
+        });
+        res.json({ message: "Secret key removed from favourites" });
+      } else {
+        res.status(404).json({ message: "Secret key not in favourites" });
+      }
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Error deleting secret key from favourites", error });
     }
   },
 ];

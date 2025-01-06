@@ -1,15 +1,15 @@
 /**
  * Defines the routes for user-related functionality in the application.
- * 
+ *
  * The following routes are available:
- * 
+ *
  * GET /users/myself - Retrieves the currently authenticated user's information
  * PUT /users/myself - Updates the currently authenticated user's information
  * DELETE /users/myself - Deletes the currently authenticated user
- * 
+ *
  * POST /users/register - Registers a new user
  * POST /users/login - Authenticates a user and returns a session token
- * 
+ *
  * GET /users - Retrieves a list of all users
  * GET /users/:id - Retrieves a specific user by their ID
  * PUT /users/:id - Updates a specific user by their ID
@@ -19,6 +19,7 @@ import { Router } from "express";
 import {
   addSkToFav,
   deleteMyself,
+  deleteSkFromFav,
   deleteUser,
   getMyself,
   getUserById,
@@ -43,5 +44,6 @@ router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
 
 router.post("/addsktofav/:skId", addSkToFav);
+router.delete("/deleteskfromfav/:skId", deleteSkFromFav);
 
 export default router;
