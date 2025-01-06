@@ -28,16 +28,24 @@ import {
   query,
   where,
   orderBy,
+  arrayUnion,
 } from "firebase/firestore";
 import { verifyToken, verifyAdminToken } from "../utils/middleware";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import "dotenv/config";
 import { getFormattedDateAndTime } from "../utils/defaults";
+import { getSecretKey } from "./skg.controller";
 
 const usersCollection = collection(db, "users");
+const secretKeysCollection = collection(db, "secret_keys");
 
 const JWT_SECRET = process.env.JWT_SECRET || "";
+
+interface favSK {
+  skId: string;
+  addedAt: string;
+}
 
 interface User {
   name: string;
@@ -46,6 +54,7 @@ interface User {
   password: string;
   isAdmin: boolean;
   createdAt: string;
+  favSK: favSK[];
 }
 
 interface UserInput {
@@ -55,6 +64,7 @@ interface UserInput {
   password: string;
   isAdmin?: boolean;
   createdAt?: string;
+  favSK?: favSK[];
 }
 
 interface UserUpdate {
@@ -64,6 +74,7 @@ interface UserUpdate {
   password?: string;
   isAdmin?: boolean;
   createdAt?: string;
+  favSK?: favSK[];
 }
 
 interface LoginInput {
@@ -268,6 +279,41 @@ export const deleteMyself = [
       res.json({ message: "User deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: "Error deleting user", error });
+    }
+  },
+];
+
+// add sk to favourites
+export const addSkToFav = [
+  verifyToken,
+  async (req: Request, res: Response) => {
+    try {
+      const skId = req.params.skId;
+      const secretKeyDoc = await getDoc(doc(secretKeysCollection, skId));
+      if (secretKeyDoc.exists()) {
+        const userDoc = doc(usersCollection, (req as any).userId);
+        const user = getDoc(userDoc);
+        const userData = (await user).data() as User;
+        if (userData.favSK.find((fav) => fav.skId === skId)) {
+          return res
+            .status(400)
+            .json({ message: "Secret key already in favourites" });
+        } else {
+          await updateDoc(userDoc, {
+            favSK: [
+              ...userData.favSK,
+              { skId, addedAt: getFormattedDateAndTime() },
+            ],
+          });
+          res.json({ message: "Secret key added to favourites" });
+        }
+      } else {
+        res.status(404).json({ message: "Secret key not found" });
+      }
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Error adding secret key to favourites", error });
     }
   },
 ];

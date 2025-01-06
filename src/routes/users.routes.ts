@@ -17,6 +17,7 @@
  */
 import { Router } from "express";
 import {
+  addSkToFav,
   deleteMyself,
   deleteUser,
   getMyself,
@@ -40,5 +41,7 @@ router.get("/", getUsers);
 router.get("/:id", getUserById);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
+
+router.post("/addsktofav/:skId", addSkToFav);
 
 export default router;
